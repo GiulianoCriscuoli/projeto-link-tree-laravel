@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Click;
 use App\Models\Page;
+use App\Models\Link;
 use App\Models\View;
 
 class PageController extends Controller
@@ -12,6 +13,12 @@ class PageController extends Controller
     public function index($slug)
     {
         $page = Page::where('slug', $slug)->first();
+
+        $links = Link::where('page_id', $page->id)
+                        ->where('active', 1)
+                        ->orderBy('order')
+                        ->get();
+        
 
         if($page) {
 
@@ -34,8 +41,6 @@ class PageController extends Controller
                     
                     break;
             }
-
-            $links = [];
 
             return view('page',[
 

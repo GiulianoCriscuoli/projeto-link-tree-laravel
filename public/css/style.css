@@ -31,3 +31,22 @@ body {
     width: 100%;
     margin: 50px 0;
 }
+
+.linkArea a {
+    display: block;
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+.linkArea a.link-rounded {
+    border-radius: 50px;
+}
+
+
+.linkArea a.link-square {
+    border-radius: 0;
+}

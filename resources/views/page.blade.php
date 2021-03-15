@@ -37,6 +37,12 @@
 
     <div class="linkArea">
 
+        @foreach ($links as $link)
+            <a href="{{ $link->href }}" class="link-{{ $link->borderType }}"
+            style="background-color:{{ $link->bgColor }}; color: {{ $link->textColor }};">
+            {{ $link->title }}
+            </a>
+        @endforeach
     </div>
       
     <div class="banner">
