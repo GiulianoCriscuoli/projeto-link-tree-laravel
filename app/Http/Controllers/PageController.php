@@ -18,7 +18,14 @@ class PageController extends Controller
                         ->where('active', 1)
                         ->orderBy('order')
                         ->get();
-        
+
+        $view = View::firstOrNew(
+            ['page_id' => $page->id, 'view_date' => date('Y-m-d')]
+        );
+
+        $view->total++;
+
+        $view->save();
 
         if($page) {
 
