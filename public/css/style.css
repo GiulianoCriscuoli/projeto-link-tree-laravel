@@ -1,0 +1,33 @@
+* {
+    box-sizing: border-box;
+}
+body {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+    font-family: Helvetica, sans-serif;
+}
+
+.profileImage img {
+    width: auto;
+    height: 100px;
+}
+
+.profileTitle {
+    font-size: 18px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.profileTitle {
+    font-size: 15px;
+    margin-top: 5px;
+}
+
+.linkArea {
+    width: 100%;
+    margin: 50px 0;
+}
