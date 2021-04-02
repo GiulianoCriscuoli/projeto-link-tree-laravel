@@ -35,7 +35,7 @@ class PageController extends Controller
                 case 'image': 
                     $bg = "url('".url('/medias/uploads').'/'.$page->bgValue."')";
 
-                    break;
+                break;
                 
                 case 'color': 
 
@@ -46,7 +46,7 @@ class PageController extends Controller
                     $bg .= !empty($colors[1]) ? $colors[1] : $colors[0];
                     $bg .= ')';
                     
-                    break;
+                break;
             }
 
             return view('page',[
