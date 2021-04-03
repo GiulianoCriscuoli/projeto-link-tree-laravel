@@ -19,8 +19,12 @@ class AdminController extends Controller
     }
 
     public function index()
-    {
+    {   
+        $user = Auth::user();
+
+        $pages = Page::where('user_id', $user->id)->get();
         
+        return view('admin/index', compact('pages'));
     }
 
     public function login(Request $request)
@@ -65,6 +69,8 @@ class AdminController extends Controller
 
         if($hasEmail === 0) {
 
+            if(!$credentials) {
+                
             $newUser = new User();
             $newUser->email = $credentials['email'];
             $newUser->password = Hash::make($credentials['password']);
@@ -74,6 +80,12 @@ class AdminController extends Controller
             Auth::login($newUser);
 
             return redirect('admin');
+
+            } else {
+
+                $request->session()->flash('error', 'Os campos não foram preenchidos');
+                return redirect()->back();
+            }
            
         } else {
             $request->session()->flash('error', 'Este email já tem uma conta existente');

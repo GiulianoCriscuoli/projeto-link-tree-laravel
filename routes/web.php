@@ -9,7 +9,7 @@ use App\Http\Controllers\AdminController;
 Route::get('/', [HomeController::class, 'index']);
 Route::prefix('/admin')->group(function() {
     
-    Route::get('/', [AdminController::class, 'index']);
+    Route::get('/', [AdminController::class, 'index'])->name('admin');
     Route::get('/login', [AdminController::class, 'login'])->name('login');
     Route::post('/login', [AdminController::class, 'loginAction']);
 
@@ -17,7 +17,7 @@ Route::prefix('/admin')->group(function() {
     Route::post('/register', [AdminController::class, 'registerAction']);
     
     Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
-    
+
 });
 
 Route::get('/{slug}', [PageController::class, 'index']);
