@@ -21,9 +21,9 @@
                     <td style="text-align: center;">{{ $page->title}}</td>
                     <td class="actions-area">
                       <a href="{{'/'.$page->slug }}" class="actions" target="_blank"> Abrir a página </a> 
-                      <a href="{{url('/admin'.$page->slug.'/links')}}" class="actions">Links</a>
-                      <a href="{{url('/admin'.$page->slug.'/design')}}" class="actions">Aparência</a>
-                      <a href="{{url('/admin'.$page->slug.'/estaticas')}}" class="actions">Estatísticas</a>
+                      <a href="{{url('/admin'.'/'.$page->slug.'/links')}}" class="actions">Links</a>
+                      <a href="{{url('/admin'.'/'.$page->slug.'/design')}}" class="actions">Aparência</a>
+                      <a href="{{url('/admin'.'/'.$page->slug.'/estatisticas')}}" class="actions">Estatísticas</a>
                     </td>
                 @endforeach
             @endif

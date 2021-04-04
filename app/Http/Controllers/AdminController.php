@@ -7,6 +7,7 @@ use App\Models\Click;
 use App\Models\Page;
 use App\Models\View;
 use App\Models\User;
+use App\Models\Link;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -91,7 +92,6 @@ class AdminController extends Controller
             $request->session()->flash('error', 'Este email já tem uma conta existente');
             return redirect()->back();
         }
-
     }
     
     public function logout() 
@@ -99,5 +99,34 @@ class AdminController extends Controller
       Auth::logout();
 
       return redirect()->route('login');
+    }
+
+    public function pageLinks($slug)
+    {
+        $user = Auth::user();
+
+        $page = Page::where('slug', $slug)
+        ->where('user_id', $user->id)->first();
+
+        $links = Link::where('page_id', $page->id)
+            ->orderBy('order', 'ASC')->get();
+
+        if($page) {
+
+            return view('admin.pages.pageLinks', compact(['page', 'links']));
+        } else {
+            
+            return redirect('/admin');
+        }
+    }
+
+    public function pageDesign($slug)
+    {
+        return view('admin.pages.pageDesign');
+    }
+
+    public function pageStats($slug)
+    {
+        return view('admin.pages.pageStats');
     }
 }
