@@ -129,4 +129,61 @@ class AdminController extends Controller
     {
         return view('admin.pages.pageStats');
     }
+
+    public function OrderUpdate($linkId, $order)
+    {
+        $user = Auth::user();
+
+        $link = Link::find($linkId);
+
+        $pagesUserId = [];
+
+        $pagesUserIdLogged = Page::where('user_id', $user->id)->get();
+
+        foreach($pagesUserIdLogged as $pageUserIdLogged) {
+
+            $pagesUserId[] = $pageUserIdLogged->id;
+
+        }
+
+        if(in_array($link->page_id, $pagesUserId)) {
+
+            if($link->order > $order) {
+
+                $afterLinks = Link::where('page_id', $link->page_id)
+                    ->where('order', '>=', $order)
+                    ->get();
+
+                foreach($afterLinks as $afterLink) {
+                    $afterLink->order++;
+                    $afterLink->save();
+                }
+
+            } elseif($link->order < $order) {
+
+                $beforeLinks = Link::where('page_id', $link->page_id)
+                    ->where('order', '<=', $order)
+                    ->get();
+
+                foreach($beforeLinks as $beforeLink) {
+                    $beforeLink->order--;
+                    $beforeLink->save();
+                } 
+            }
+
+            $link->order = $order;
+            $link->save();
+
+            $allLinks = Link::where('page_id', $link->page_id)
+            ->orderBy('order', 'ASC')
+            ->get();
+
+            foreach($allLinks as $linkKey => $linkItem) {
+                $linkItem->order = $linkKey;
+                $linkItem->save();
+            }
+        }
+
+        return [];
+    }
 }

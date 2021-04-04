@@ -22,6 +22,8 @@ Route::prefix('/admin')->group(function() {
     Route::get('/{slug}/design', [AdminController::class, 'pageDesign'])->name('pages.design');
     Route::get('/{slug}/estatisticas', [AdminController::class, 'pageStats'])->name('pages.stats');
 
+    Route::get('/link-order/{linkId}/{order}', [AdminController::class, 'OrderUpdate']);
+
 });
 
 Route::get('/{slug}', [PageController::class, 'index']);
