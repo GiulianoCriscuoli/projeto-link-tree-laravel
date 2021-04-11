@@ -184,3 +184,29 @@ table td {
     background-color: #ce2626;
     margin-left: 5px;
 }
+
+.formLinks {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.formLinks label {
+    margin-bottom: 15px;
+}
+
+.formLinks input,
+.formLinks select {
+    border-radius: 5px;
+    outline: none;
+    border: 2px solid rgb(11, 151, 91);
+    background-color: #CCC;
+}
+
+.formLinks input[type="submit"] {
+    background-color: rgb(11, 151, 91);
+    padding: 10px 20px;
+    color: #FFF;
+    font-weight: bold;
+    cursor: pointer;
+}

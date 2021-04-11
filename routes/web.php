@@ -24,6 +24,9 @@ Route::prefix('/admin')->group(function() {
 
     Route::get('/link-order/{linkId}/{order}', [AdminController::class, 'OrderUpdate']);
 
+    Route::get('/{slug}/novo-link', [AdminController::class, 'newLink']);
+    Route::post('/{slug}/novo-link', [AdminController::class, 'newLinkStore']);
+
 });
 
 Route::get('/{slug}', [PageController::class, 'index']);

@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Link;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
@@ -116,6 +117,67 @@ class AdminController extends Controller
             return view('admin.pages.pageLinks', compact(['page', 'links']));
         } else {
             
+            return redirect('/admin');
+        }
+    }
+
+    public function newLink($slug)
+     {
+
+        $user = Auth::user();
+
+        $page = Page::where('user_id', $user->id)
+            ->where('slug', $slug)
+            ->first();
+
+            if($page) {
+
+                return view('admin/make_links',[
+                    'menu' => 'links',
+                    'page' => $page
+                ]);
+
+            } else {
+                return redirect('/admin');
+            }
+    }
+
+    public function newLinkStore($slug, Request $request)
+    {
+        $user = Auth::user();
+
+        $page = Page::where('user_id', $user->id)
+            ->where('slug', $slug)
+            ->first();
+
+        if($page) {
+
+            $credentials = $request->validate([
+                'active' => ['required', 'boolean'],
+                'title' => ['required', 'min:3'],
+                'href' => ['required', 'url'],
+                'bgColor' => ['required'],
+                'textColor' => ['required'],
+                'borderType' => ['required', Rule::in(['square', 'rounded'])]
+            ]);
+
+            $totalLinks = Link::where('page_id', $page->id)->count();
+
+            $newLink = new Link();
+            $newLink->page_id = $page->id;
+            $newLink->active = $credentials['active'];
+            $newLink->order = $totalLinks;
+            $newLink->title = $credentials['title'];
+            $newLink->href = $credentials['href'];
+            $newLink->bgColor = $credentials['bgColor'];
+            $newLink->textColor = $credentials['textColor'];
+            $newLink->borderType = $credentials['borderType'];
+
+            $newLink->save();
+
+            return redirect('/admin/'. $page->slug.'/links');
+
+        } else {    
             return redirect('/admin');
         }
     }
