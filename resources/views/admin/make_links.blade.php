@@ -15,38 +15,38 @@
         <label for="active">
             Ativo: 
             <select name="active">
-                <option value="1">Sim</option>
-                <option value="0">Não</option>
+                <option {{ isset($link) ? $link->order == '1' ? 'selected' : '' : '' }} value="1">Sim</option>
+                <option {{ isset($link) ? $link->order == '0' ? 'selected' : '' : '' }} value="0">Não</option>
             </select>
         </label>
 
         <label for="title">
             Título do link: 
-            <input type="text" name="title">
+            <input type="text" name="title" value="{{ $link->title ?? '' }}">
         </label>
 
         <label for="href">
             Url do link: 
-            <input type="url" name="href">
+            <input type="url" name="href" value="{{ $link->href ?? '' }}">
         </label>
 
         
         <label for="bgColor">
             Cor de fundo do link: 
-            <input type="color" name="bgColor" value="#FFF">
+            <input type="color" name="bgColor" value="{{ $link->bgColor ?? '#FFF' }}">
         </label>
 
         
         <label for="textColor">
             Cor de texto do link: 
-            <input type="color" name="textColor" value="#000">
+            <input type="color" name="textColor" value="{{ $link->bgText ?? '#000' }}">
         </label>
 
         <label for="active">
             Tipo de borda: 
             <select name="borderType">
-                <option value="rounded">Arredondada</option>
-                <option value="square">Quadrada</option>
+                <option {{ isset($link->borderType) ? $link->borderType == 'rounded' ? 'selected' : '' : '' }} value="rounded">Arredondada</option>
+                <option {{ isset($link->boderType) ? $link->borderType == 'square' ? 'selected' : '' : '' }}value="square">Quadrada</option>
             </select>
         </label>
 

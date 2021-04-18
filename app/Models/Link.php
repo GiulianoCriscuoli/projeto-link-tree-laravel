@@ -9,5 +9,14 @@ class Link extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'href',
+        'bgColor',
+        'active',
+        'textColor',
+        'borderType'
+    ];
+
     public $timestamps = false;
 }

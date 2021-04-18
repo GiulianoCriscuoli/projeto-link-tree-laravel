@@ -182,6 +182,69 @@ class AdminController extends Controller
         }
     }
 
+    public function editLink($slug, $linkId)
+    {
+        
+        $user = Auth::user();
+
+        $page = Page::where('user_id', $user->id)
+            ->where('slug', $slug)
+            ->first();
+
+        if($page) {
+
+            $link = Link::where('page_id', $page->id)
+                ->where('id', $linkId)
+                ->first();
+            
+            if($link) {
+
+                return view('admin/make_links', [
+                    'menu' => 'links',
+                    'page' => $page,
+                    'link' => $link
+                ]);
+            }
+        }
+    }
+
+    public function linkUpdate($slug, $linkid, Request $request) {
+
+        $user = Auth::user();
+
+        $page = Page::where('user_id', $user->id)
+            ->where('slug', $slug)->first();
+
+        if($page) {
+
+            $link = Link::where('page_id', $page->id)
+                ->where('id', $linkid)->first();
+
+            if($link) {
+
+            $credentials = $request->validate([
+                'active' => ['required', 'boolean'],
+                'title' => ['required', 'min:3'],
+                'href' => ['required', 'url'],
+                'bgColor' => ['required'],
+                'textColor' => ['required'],
+                'borderType' => ['required', Rule::in(['square', 'rounded'])]
+            ]);
+
+            $link->active = $credentials['active'];
+            $link->title = $credentials['title'];
+            $link->href = $credentials['href'];
+            $link->bgColor = $credentials['bgColor'];
+            $link->textColor = $credentials['textColor'];
+            $link->borderType = $credentials['borderType'];
+            $link->save();
+
+            return redirect('/admin/'. $page->slug.'/links');
+                
+            }
+        }
+    }
+
     public function pageDesign($slug)
     {
         return view('admin.pages.pageDesign');
