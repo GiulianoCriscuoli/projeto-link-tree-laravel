@@ -245,6 +245,27 @@ class AdminController extends Controller
         }
     }
 
+    public function deleteLink($slug, $linkId) {
+
+        $user = Auth::user();
+
+        $page = Page::where('user_id', $user->id)
+            ->where('slug', $slug)->first();
+
+            if($page){
+
+                $link = Link::where('page_id', $page->id)
+                    ->where('id', $linkId)->first();
+
+                    if($link) {
+
+                        $link->delete();
+
+                        return redirect('/admin/'. $page->slug. '/links');
+                    }
+            }
+    }
+
     public function pageDesign($slug)
     {
         return view('admin.pages.pageDesign');

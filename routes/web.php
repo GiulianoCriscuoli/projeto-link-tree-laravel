@@ -30,6 +30,10 @@ Route::prefix('/admin')->group(function() {
     Route::get('/{slug}/editar/{linkId}', [AdminController::class, 'editLink']);
     Route::post('/{slug}/editar/{linkId}', [AdminController::class, 'linkUpdate']);
 
+    Route::get('/{slug}/excluir/{linkId}', [AdminController::class, 'deleteLink']);
+
+
+
 });
 
 Route::get('/{slug}', [PageController::class, 'index']);
